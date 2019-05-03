@@ -163,6 +163,7 @@ RegisterCommand("bus", function(source, args, rawCommand)
   end
 end)
 
+-- For DH's identity script, reload all the things
 AddEventHandler("esx_dh:characterChanged", function()
   -- Reload ESX object to get all character details
   ESX = nil
