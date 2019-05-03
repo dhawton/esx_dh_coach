@@ -46,3 +46,4 @@ Config.Routes = {
     { x = 302.26, y = -1361.41, z = 30.74 },
   }
 }
+Config.VehicleModel = "bus"

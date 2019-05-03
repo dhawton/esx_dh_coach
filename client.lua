@@ -93,7 +93,7 @@ Citizen.CreateThread(function()
           shownStartHelp = true
         end
       end
-      if IsControlJustReleased(0, 51) and IsVehicleModel(GetVehiclePedIsIn(GetPlayerPed(-1), false), GetHashKey("bus")) then
+      if IsControlJustReleased(0, 51) and IsVehicleModel(GetVehiclePedIsIn(GetPlayerPed(-1), false), GetHashKey(Config.VehicleModel)) then
         if not started then
           nextPos = 2
           started = true
@@ -119,7 +119,7 @@ Citizen.CreateThread(function()
           BeginTextCommandSetBlipName('STRING')
           AddTextComponentString("Next Stop")
           EndTextCommandSetBlipName(nextPosBlip)
-          TriggerEvent("chat:addMessage", { args = {"^1[bus]", "Here we go! Follow the GPS coordinates and use 'E' at each stop along the route."}})
+          ESX.ShowHelpNotification("Here we go! Follow the GPS coordinates and use 'E' at each stop along the route.")
         end
       end
     end
@@ -128,7 +128,7 @@ end)
 
 RegisterCommand("bus", function(source, args, rawCommand)
   if args[1] == "start" then
-    if IsVehicleModel(GetVehiclePedIsIn(GetPlayerPed(-1), false), GetHashKey("bus")) then
+    if IsVehicleModel(GetVehiclePedIsIn(GetPlayerPed(-1), false), Config.VehicleModel) then
       nextPos = 2
       started = true
       nextPosBlip = AddBlipForCoord(routeTable[nextPos].x, routeTable[nextPos].y, routeTable[nextPos].z)
@@ -146,7 +146,7 @@ RegisterCommand("bus", function(source, args, rawCommand)
     ready = false
     RemoveBlip(nextPosBlip)
     TriggerEvent("chat:addMessage", { args = {"^1[bus]", "You have stopped your shift. You will need a new bus to resume."}})
-  elseif args[1] == "route" and IsVehicleModel(GetVehiclePedIsIn(GetPlayerPed(-1), false), GetHashKey("bus")) then
+  elseif args[1] == "route" and IsVehicleModel(GetVehiclePedIsIn(GetPlayerPed(-1), false), GetHashKey(Config.VehicleModel)) then
     local i = tonumber(args[2])
     if Config.Routes[i] == nil then
       TriggerEvent("chat:addMessage", { args = {"^1[bus]", "Invalid route provided." }})
@@ -192,7 +192,7 @@ function SpawnBus()
   elseif route == 4 then
     coords = Config.BusPickup.platform4
   end
-  ESX.Game.SpawnVehicle(GetHashKey("bus"), coords, coords.h, function(vehicle)
+  ESX.Game.SpawnVehicle(GetHashKey(Config.VehicleModel), coords, coords.h, function(vehicle)
     SetVehicleNumberPlateText(vehicle, "BUS  " .. math.random(100,999))
     TaskWarpPedIntoVehicle(PlayerPedId(), vehicle, -1)
     SetVehicleMaxMods(vehicle)
