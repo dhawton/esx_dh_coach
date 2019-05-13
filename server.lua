@@ -8,7 +8,7 @@ Citizen.CreateThread(function()
 end)
 
 RegisterNetEvent("esx_dh:coach:stop")
-AddEventHandler("esx_dh:stop", function(route)
+AddEventHandler("esx_dh:coach:stop", function(route)
   local pay = 0
   local _source = source
   local xPlayer = ESX.GetPlayerFromId(_source)
