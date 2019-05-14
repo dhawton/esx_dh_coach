@@ -17,6 +17,11 @@ Citizen.CreateThread(function()
     TriggerEvent("esx:getSharedObject", function(obj) ESX = obj end)
     Wait(100)
   end
+
+  while ESX.GetPlayerData().job == nil do
+    Citizen.Wait(100)
+  end
+
   PlayerData = ESX.GetPlayerData()
   RefreshBlips()
 end)
