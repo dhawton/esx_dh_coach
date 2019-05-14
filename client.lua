@@ -133,6 +133,10 @@ end)
 
 RegisterCommand("bus", function(source, args, rawCommand)
   if args[1] == "start" then
+    if routeTable == nil then
+      TriggerEvent("chat:addMessage", { args = {"^1[bus]", "You haven't been assigned a route by the bus depot yet." }})
+      return
+    end
     if IsVehicleModel(GetVehiclePedIsIn(GetPlayerPed(-1), false), Config.VehicleModel) then
       nextPos = 2
       started = true
@@ -149,6 +153,7 @@ RegisterCommand("bus", function(source, args, rawCommand)
     nextPos = nil
     started = false
     ready = false
+    routeTable = nil
     RemoveBlip(nextPosBlip)
     TriggerEvent("chat:addMessage", { args = {"^1[bus]", "You have stopped your shift. You will need a new bus to resume."}})
   elseif args[1] == "route" and IsVehicleModel(GetVehiclePedIsIn(GetPlayerPed(-1), false), GetHashKey(Config.VehicleModel)) then
